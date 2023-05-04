@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class M3s01ProjetorevisaoApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(M3s01ProjetorevisaoApplication.class, args);
     }
 
