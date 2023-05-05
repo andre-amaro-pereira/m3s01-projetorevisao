@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 //repositório é para consultar, editar, apagar etc no banco de dados
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
+
 }

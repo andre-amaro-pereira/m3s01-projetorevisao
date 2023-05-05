@@ -2,7 +2,10 @@ package br.com.joaquina.m3s01projetorevisao.controllers;
 
 import br.com.joaquina.m3s01projetorevisao.entities.Product;
 import br.com.joaquina.m3s01projetorevisao.services.ProductService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/product")
@@ -13,27 +16,46 @@ public class ProductController {
         this.productService = productService;
     }
     @GetMapping
-    public String get() {
-        return "GET todos os produtos";
+    public List<Product> get() {
+        return productService.getALl();
     }
 
-    @GetMapping("{id}")
-    public String getId() {
-        return "GET produto por id";
+    @GetMapping("{id}") //procura/retorna por id
+    public ResponseEntity<?> getId(@PathVariable Long id) {
+        try {
+            Product product = productService.getById(id);
+            return ResponseEntity.ok(product);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PostMapping
-    public Product post(@RequestBody Product product) throws Exception {
-        return productService.save(product);
+    public ResponseEntity<?> post(@RequestBody Product product) throws Exception {
+        try {
+            product.setId(null);
+            return ResponseEntity.ok(productService.save(product));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
-    @PutMapping
-    public String put(Product product) {
-        return "PUT produto";
+    @PutMapping("{id}") //edição por id. Verifica se tem o id. edita.
+    public ResponseEntity<?> put(@PathVariable Long id, @RequestBody Product product) {
+        try {
+            product.setId(id);
+            return ResponseEntity.ok(productService.save(product));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
-    @DeleteMapping("{id}")
-    public String delete() {
-        return "DELETE produto por id";
+    @DeleteMapping("{id}") //deletar por id
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(productService.delete(id));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
