@@ -1,7 +1,9 @@
 package br.com.joaquina.m3s01projetorevisao.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 
@@ -12,12 +14,13 @@ public class DemandItem {
     @Column(name = "demand_item_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @ToString.Exclude
+    @JoinColumn(name="demand_id",nullable = false)
     private Demand demand;
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name="product_id",nullable = false)
     private Product product;
 
     @Column(precision = 19, scale = 2, nullable = false)

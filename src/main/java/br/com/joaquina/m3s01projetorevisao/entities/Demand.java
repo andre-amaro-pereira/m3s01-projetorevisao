@@ -18,7 +18,7 @@ public class Demand {
     @Column(nullable = false)
     private Date dateOrdered = new Date();
     @ManyToOne //references customer_id
-    @JoinColumn(nullable = false) //"@JoinColumn" pq as 2 entidades estão trabalhando com as tabelas
+    @JoinColumn(name = "customer_id",nullable = false) //"@JoinColumn" pq as 2 entidades estão trabalhando com as tabelas
     private Customer customer;
 
     @Column(name = "total_items", precision = 19, scale = 2, nullable = false)
@@ -26,6 +26,6 @@ public class Demand {
     @Column(precision = 19, scale = 2, nullable = false)
     private BigDecimal total;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true) //cascade tem controle de add exclur items,
+    @OneToMany(mappedBy = "demand", cascade = CascadeType.ALL, orphanRemoval = true) //cascade tem controle de add exclur items,
     private List<DemandItem> items = new ArrayList<>();
 }

@@ -14,10 +14,10 @@ public class DemandPayment {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name="demand_id",nullable = false)
     private Demand demand;
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name="payment_method_id",nullable = false)
     private PaymentMethod paymentMethod;
     @Column(length = 30)
     private String cardNumber;
